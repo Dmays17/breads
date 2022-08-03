@@ -5,12 +5,23 @@ const Bread=require('../models/bread.js')
 // INDEX
 // INDEX
 // SHOW
-breads.get('/',(req,res)=>{
-  res.render("Index",{
-   breads:Bread,
-   title:"Index Page"
+breads.get('/',async(req,res)=>{
+  Bread.find().then((foundBreads)=>{
+    res.render('index',{
+      breads:foundBreads,
+      title:"index Page",
+    })
   })
+
 })
+  /*const breads= await Bread.find()
+    res.render('index',{
+      breads: breads ,
+      title:'Index Page',
+    })
+    */
+ 
+  
 
 breads.get('/new', (req, res) => {
   res.render('new')
@@ -53,7 +64,7 @@ breads.post('/', (req, res) => {
   } else {
     req.body.hasGluten = false
   }
-  Bread.push(req.body)
+  Bread.insertOne(req.body)
   res.redirect('/breads')
 })
 

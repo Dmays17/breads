@@ -6,14 +6,13 @@ function Index({breads}){
     return(
         <Default>
   <h2>Index Page</h2>
-  {/* <p>I have {breads[0].name} bread!</p> */}
-  {/* This is a JSX comment. */}
+ 
   <ul>
   {
   breads.map((bread, index)=> {
     return (
-      <li key={index}>
-        <a href={`/breads/${index}`}>
+      <li key={bread.id}>
+        <a href={`/bread/${bread.id}`}>
           {bread.name}
         </a>
       </li>

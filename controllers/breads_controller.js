@@ -5,22 +5,16 @@ const Bread=require('../models/bread.js')
 // INDEX
 // INDEX
 // SHOW
-breads.get('/',async(req,res)=>{
+breads.get('/', (req,res)=>{
   Bread.find().then((foundBreads)=>{
     res.render('index',{
       breads:foundBreads,
       title:"index Page",
     })
+    console.log(foundBreads)
   })
 
 })
-  /*const breads= await Bread.find()
-    res.render('index',{
-      breads: breads ,
-      title:'Index Page',
-    })
-    */
- 
   
 
 breads.get('/new', (req, res) => {
@@ -32,17 +26,24 @@ breads.get('/:indexArray/edit',(req,res)=>{
     index:req.params.indexArray
   })
 })
+
+
 // SHOW
-breads.get('/:arrayIndex', (req, res) => {
-  if (Bread[req.params.arrayIndex]) {
-    res.render('Show', {
-      bread:Bread[req.params.arrayIndex],
-      index: req.params.arrayIndex,
-    })
-  } else {
-    res.render('404')
-  }
+breads.get('/:id', (req, res) => {
+  Bread.findById(req.params.id)
+      .then(foundBread => {
+        res.render('show', {
+            bread: foundBread
+        })
+      })
+      //.catch(err => {
+      //  res.send('404')
+      //})
 })
+
+
+
+
 
 
 breads.put('/:arrayIndex',(req,res)=>{

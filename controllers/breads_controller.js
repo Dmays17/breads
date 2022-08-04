@@ -32,29 +32,38 @@ breads.get('/:indexArray/edit',(req,res)=>{
 breads.get('/:id', (req, res) => {
   Bread.findById(req.params.id)
       .then(foundBread => {
-        res.render('show', {
-            bread: foundBread
-        })
+          res.render('show', {
+              bread: foundBread
+          })
       })
-      //.catch(err => {
-      //  res.send('404')
-      //})
 })
 
+// breads.get('/:id', (req, res) => {
+//   Bread.findById(req.params.id)
+//       .then(foundBread => {
+//         res.render('show', {
+//             bread: foundBread
+//         })
+//       })
+//       //.catch(err => {
+//       //  res.send('404')
+//       //})
+// })
 
 
 
 
 
-breads.put('/:arrayIndex',(req,res)=>{
-  if(req.body.hasGluten === 'on'){
-    req.body.hadGluten=true
-  }else{
-    req.body.hasGluten=false
-  }
-  Bread[req.params.arrayIndex]=req.body
-  res.redirect(`/breads/${req.params.arrayIndex}`)
-})
+
+// breads.put('/:arrayIndex',(req,res)=>{
+//   if(req.body.hasGluten === 'on'){
+//     req.body.hadGluten=true
+//   }else{
+//     req.body.hasGluten=false
+//   }
+//   Bread[req.params.arrayIndex]=req.body
+//   res.redirect(`/breads/${req.params.arrayIndex}`)
+// })
 
 breads.post('/', (req, res) => {
   if (!req.body.image) {
@@ -68,6 +77,21 @@ breads.post('/', (req, res) => {
   Bread.insertOne(req.body)
   res.redirect('/breads')
 })
+
+breads.post('/', (req, res) => {
+  if(!req.body.image) {
+      req.body.image = undefined 
+  }
+  if(req.body.hasGluten === 'on') {
+    req.body.hasGluten = true
+  } else {
+    req.body.hasGluten = false
+  }
+  Bread.create(req.body)
+  res.redirect('/breads')
+})
+
+
 
 breads.delete('/:indexArray',(req,res)=>{
   Bread.splice(req.params.indexArray,1)

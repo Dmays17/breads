@@ -10,6 +10,7 @@ breads.get('/', (req,res)=>{
   Bread.find().then((foundBreads)=>{
     res.render('index',{
       breads:foundBreads,
+      bakers:foundBreads,
       title:"index Page",
     })
     //console.log(foundBreads)
@@ -26,6 +27,20 @@ breads.get('/new', (req, res) => {
   })
 })
 }) 
+
+// SHOW
+breads.get('/:id', (req, res) => {
+  Bread.findById(req.params.id)
+      .populate('baker')
+      .then(foundBread => {
+        // const bakedBy=foundBread.getBakedBy()
+        // console.log(bakedBy)
+        res.render('show', {
+            bread: foundBread
+        })
+      })
+})
+
 breads.get('/:id/edit', (req, res) => {
   Bread.findById(req.params.id) 
     .then(foundBread => { 
@@ -34,21 +49,6 @@ breads.get('/:id/edit', (req, res) => {
         bakers:foundBakers
       })
     })
-})
-
-
-
-// SHOW
-breads.get('/:id', (req, res) => {
-  Bread.findById(req.params.id)
-      .populate('baker')
-      .then(foundBread => {
-        const bakedBy=foundBread.getBakedBy()
-        console.log(bakedBy)
-        res.render('show', {
-            bread: foundBread
-        })
-      })
 })
 
 // breads.get('/:id', (req, res) => {

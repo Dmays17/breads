@@ -6,11 +6,18 @@ const bakerSchema= new Schema({
         required:true,
         enum: ['Rachel','Monica','Joey','Chandler','Ross',"Phoebe"]
     },
-    startDated:{
-        type:Date,
-        required:true
+    startDate: {
+        type: Date,
+        required: true
     },
-    bio:String
+    bio: String
+}, { toJSON: { virtuals: true }})
+
+// virtuals 
+bakerSchema.virtual('breads', {
+    ref: 'Bread',
+    localField: '_id',
+    foreignField: 'baker'
 })
 
 const Baker=mongoose.model('Baker',bakerSchema)

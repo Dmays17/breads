@@ -1,4 +1,5 @@
 const mongoose=require('mongoose')
+const Bread=require('./bread')
 const{Schema}=mongoose
 const bakerSchema= new Schema({
     name:{
@@ -13,6 +14,7 @@ const bakerSchema= new Schema({
     bio: String
 }, { toJSON: { virtuals: true }})
 
+
 // virtuals 
 bakerSchema.virtual('breads', {
     ref: 'Bread',
@@ -20,5 +22,11 @@ bakerSchema.virtual('breads', {
     foreignField: 'baker'
 })
 
+bakerSchema.post('findOneAndDelete', function() {
+    Bread.deleteMany({ baker: this._conditions._id })
+        .then(deleteStatus => {
+            console.log(deleteStatus)
+        })
+})
 const Baker=mongoose.model('Baker',bakerSchema)
 module.exports=Baker

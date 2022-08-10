@@ -15,8 +15,8 @@ const breadSchema = new Schema({
 })
 
 breadSchema.methods.getBakedBy=function(){
-    console.log('name:',this)
-    return `${this?.name} was baked with love by ${this?.baker?.name},who has been with us since ${this?.baker?.startdate?.getFullYear}`
+    
+    return `${this.name} was baked with love by ${this?.baker?.name},who has been with us since ${this?.baker?.startDate.getFullYear()}`
 }
 // model and export 
 const Bread = mongoose.model('Bread', breadSchema)
